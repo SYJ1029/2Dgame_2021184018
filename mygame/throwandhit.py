@@ -1,7 +1,7 @@
 from pico2d import * 
 from gfw import *
 
-world = World()
+world = World(['bg', 'bgpitcher', 'bbbatter'])
 
 canvas_width = 1280
 canvas_height = 720
@@ -9,7 +9,10 @@ shows_bounding_box = True
 shows_object_count = True
 
 def enter():
-    pass
+    world.append(Background('res/Stadium_PitandBat.png'), world.layer.bg)
+    world.append(Sprite('res/Pitcher.png', canvas_width / 2 - 50, canvas_height/2 + 100), world.layer.bgpitcher)
+    world.append(Sprite('res/Batter.png', canvas_width / 2 + 150, 150), world.layer.bbbatter)
+
 
 def exit():
     world.clear()
