@@ -8,7 +8,7 @@ class Ball(Sprite):
     ballheight = 50
 
     def __init__(self):
-        super().__init__(f'res/Ball.png',  640, 360 - 50)
+        super().__init__(f'res/Ball.png',  600, 360 - 50)
 
     
     def handle_event(e):
