@@ -30,7 +30,7 @@ class Pitcher(Sprite):
         pass
 
     def draw(self):
-        super().draw
+        self.image.draw(self.x, self.y)
 
 
 
