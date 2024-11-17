@@ -2,7 +2,7 @@ from pico2d import *
 from gfw import *
 from Ball import Ball
 from Pitcher import Pitcher
-import Batter
+from Batter import Batter
 
 world = World(['bg', 'bgpitcher', 'bbbatter', 'interaction'])
 
@@ -18,11 +18,14 @@ def enter():
 
     global pitcher
     global ball
+    global batter
     ball = Ball()
     pitcher = Pitcher()
+    batter = Batter()
+
 
     world.append(pitcher, world.layer.bgpitcher)
-    world.append(Sprite('res/Batter.png', canvas_width / 2 + 150, 200), world.layer.bbbatter)
+    world.append(batter, world.layer.bbbatter)
     world.append(ball, world.layer.interaction)
 
 
