@@ -1,6 +1,6 @@
 from pico2d import * 
 from gfw import *
-import Ball
+from Ball import Ball
 from Pitcher import Pitcher
 import Batter
 
@@ -17,10 +17,13 @@ def enter():
 
 
     global pitcher
+    global ball
+    ball = Ball()
     pitcher = Pitcher()
 
     world.append(pitcher, world.layer.bgpitcher)
     world.append(Sprite('res/Batter.png', canvas_width / 2 + 150, 200), world.layer.bbbatter)
+    world.append(ball, world.layer.interaction)
 
 
 
@@ -36,6 +39,9 @@ def resume():
 def handle_event(e):
     if e.type == SDL_KEYDOWN and e.key == SDLK_1:
         print(world.objects)
+        return
+    if e.type == SDL_KEYDOWN and e.key == SDLK_RETURN:
+
         return
 
 if __name__ == '__main__':
