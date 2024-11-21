@@ -43,7 +43,22 @@ class Ball(Sprite):
 
                 pass
 
+    
+    
+    def move(self):
+        self.x += self.dx * self.t
+        self.y += self.dy * self.t
+        self.t += 0.00005
 
+    def clear(self):
+        self.godraw = False
+        self.t = 0
+        self.x = 600
+        self.y = 310
+        self.area = self.ballwidth / 2
+        self.dx = 0        
+        self.dy = 0
+        self.inited = False
 
     def update(self):
         if(self.godraw):
@@ -51,14 +66,10 @@ class Ball(Sprite):
             self.move()
         
         if(self.area <= 0):
-            self.godraw = False
-            self.t = 0
+            self.clear()
+        
         #print(self.area)
 
-    def move(self):
-        self.x += self.dx * self.t
-        self.y += self.dy * self.t
-        self.t += 0.00005
 
     def draw(self):
         if self.godraw:
