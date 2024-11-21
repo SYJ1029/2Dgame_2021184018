@@ -22,6 +22,7 @@ def enter():
 
     pitcher = Pitcher()
     batter = Batter()
+    ball = Ball([0, 0])
 
 
     world.append(pitcher, world.layer.bgpitcher)
@@ -43,7 +44,6 @@ def handle_event(e):
         print(world.objects)
         return
     if e.type == SDL_KEYDOWN and e.key == SDLK_RETURN:
-        ball = Ball(1)
         world.append(ball, world.layer.interaction)
 
         return
