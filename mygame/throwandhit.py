@@ -1,8 +1,8 @@
 from pico2d import * 
 from gfw import *
-from Ball import Ball
 from Pitcher import Pitcher
 from Batter import Batter
+from Ball import Ball
 
 world = World(['bg', 'bgpitcher', 'bbbatter', 'interaction'])
 
@@ -51,7 +51,7 @@ def handle_event(e):
 
     
     ball.handle_event(e)
-    batter.handle_event(e)
+    batter.handle_event(e, ball)
 
 if __name__ == '__main__':
     gfw.start_main_module()
