@@ -42,16 +42,21 @@ def resume():
     print('[main.resume()]')
 
 def handle_event(e):
+    batter.handle_event(e)
+    
     if e.type == SDL_KEYDOWN and e.key == SDLK_1:
         print(world.objects)
     if e.type == SDL_KEYDOWN and e.key == SDLK_RETURN:
         if(ball.inited == False):
             ball.inited = True
             ball.godraw = True
+    if e.type == SDL_MOUSEBUTTONDOWN:
+            if e.button == SDL_BUTTON_LEFT:
+                batter.Check_collision(ball)
+           
 
     
     ball.handle_event(e)
-    batter.handle_event(e, ball)
 
 if __name__ == '__main__':
     gfw.start_main_module()
