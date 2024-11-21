@@ -27,6 +27,8 @@ def enter():
 
     world.append(pitcher, world.layer.bgpitcher)
     world.append(batter, world.layer.bbbatter)
+    world.append(ball, world.layer.interaction)
+
 
 
 
@@ -42,11 +44,13 @@ def resume():
 def handle_event(e):
     if e.type == SDL_KEYDOWN and e.key == SDLK_1:
         print(world.objects)
-        return
     if e.type == SDL_KEYDOWN and e.key == SDLK_RETURN:
-        world.append(ball, world.layer.interaction)
+        if(ball.inited == False):
+            ball.inited = True
+            ball.godraw = True
 
-        return
+    
+    ball.handle_event(e)
 
 if __name__ == '__main__':
     gfw.start_main_module()
