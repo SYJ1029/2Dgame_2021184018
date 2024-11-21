@@ -11,6 +11,7 @@ class Ball(Sprite):
     initpos = [0, 0]
     maxarea = 40 * 40
     center = [610, 240]
+    t = 0
     inited = False
     godraw = False
 
@@ -22,16 +23,17 @@ class Ball(Sprite):
         self.ballheight = 40
         self.initpos = copy.deepcopy(self.center)
         self.inited = False
- 
+        self.dx = 0
+        self.dy = 0 
 
     def initbbpos():
         pass
     
     def handle_event(self, e):
         if e.type == SDL_KEYDOWN:
-            if e.key == SDLK_RETURN:
-                print('It works!')
-                print()
+            if e.key == SDLK_RETURN and self.dx == 0:
+                self.dx = (self.center[0] - self.ballwidth / 2) - self.x
+                self.dy = (self.center[1] - self.ballheight / 2) - self.y
             if e.key >= SDLK_1 and e.key <= SDLK_9:
                 token = e.key - SDLK_0 - 1
                 row = token // 3
@@ -48,10 +50,17 @@ class Ball(Sprite):
     def update(self):
         if(self.godraw):
             self.area -= 0.1
+            self.move()
         
         if(self.area <= 0):
             self.godraw = False
+            self.t = 0
         #print(self.area)
+
+    def move(self):
+        self.x += self.dx * self.t
+        self.y += self.dy * self.t
+        self.t += 0.0005
 
     def draw(self):
         if self.godraw:
