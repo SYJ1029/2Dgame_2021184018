@@ -51,6 +51,7 @@ def handle_event(e):
 
     
     ball.handle_event(e)
+    batter.handle_event(e)
 
 if __name__ == '__main__':
     gfw.start_main_module()
