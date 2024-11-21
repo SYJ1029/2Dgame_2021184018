@@ -11,7 +11,7 @@ class Ball(Sprite):
     def __init__(self, ballarea):
         super().__init__(f'res/Ball.png',  600, 360 - 50)
         
-        self.area = 20
+        self.area = 0
         self.center = [610, 240]
         self.center += ballarea
         self.ballwidth = 40
@@ -30,6 +30,7 @@ class Ball(Sprite):
     def handle_event(self, e):
         if e.type == SDL_KEYDOWN:
             if e.key == SDLK_RETURN and self.dx == 0:
+                self.area = self.ballwidth / 2
                 self.dx = (self.center[0]) - self.x
                 self.dy = (self.center[1]) - self.y
             if e.key >= SDLK_1 and e.key <= SDLK_9:
@@ -55,7 +56,6 @@ class Ball(Sprite):
         self.t = 0
         self.x = 600
         self.y = 310
-        self.area = self.ballwidth / 2
         self.dx = 0        
         self.dy = 0
         self.inited = False
