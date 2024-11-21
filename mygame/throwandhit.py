@@ -43,7 +43,7 @@ def resume():
 
 def handle_event(e):
     batter.handle_event(e)
-    
+
     if e.type == SDL_KEYDOWN and e.key == SDLK_1:
         print(world.objects)
     if e.type == SDL_KEYDOWN and e.key == SDLK_RETURN:
@@ -52,7 +52,8 @@ def handle_event(e):
             ball.godraw = True
     if e.type == SDL_MOUSEBUTTONDOWN:
             if e.button == SDL_BUTTON_LEFT:
-                batter.Check_collision(ball)
+                if(ball.area < ball.ballwidth / 2 * 0.25):
+                    batter.Check_collision(ball)
            
 
     
