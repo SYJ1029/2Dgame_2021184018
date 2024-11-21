@@ -5,26 +5,24 @@ import copy
 
 
 class Ball(Sprite):
-    ballwidth = 40
-    ballheight = 40
-    area = 20
-    initpos = [0, 0]
-    maxarea = 40 * 40
-    center = [610, 240]
-    t = 0
-    inited = False
-    godraw = False
+
 
 
     def __init__(self, ballarea):
         super().__init__(f'res/Ball.png',  600, 360 - 50)
+        
+        self.area = 20
+        self.center = [610, 240]
         self.center += ballarea
         self.ballwidth = 40
         self.ballheight = 40
         self.initpos = copy.deepcopy(self.center)
         self.inited = False
+        self.t = 0
         self.dx = 0
         self.dy = 0 
+        self.inited = False
+        self.godraw = False
 
     def initbbpos():
         pass
@@ -32,8 +30,8 @@ class Ball(Sprite):
     def handle_event(self, e):
         if e.type == SDL_KEYDOWN:
             if e.key == SDLK_RETURN and self.dx == 0:
-                self.dx = (self.center[0] - self.ballwidth / 2) - self.x
-                self.dy = (self.center[1] - self.ballheight / 2) - self.y
+                self.dx = (self.center[0]) - self.x
+                self.dy = (self.center[1]) - self.y
             if e.key >= SDLK_1 and e.key <= SDLK_9:
                 token = e.key - SDLK_0 - 1
                 row = token // 3
@@ -60,7 +58,7 @@ class Ball(Sprite):
     def move(self):
         self.x += self.dx * self.t
         self.y += self.dy * self.t
-        self.t += 0.0005
+        self.t += 0.00005
 
     def draw(self):
         if self.godraw:
