@@ -3,6 +3,8 @@ from gfw import *
 from Pitcher import Pitcher
 from Batter import Batter
 from Ball import Ball
+import Defending
+
 
 world = World(['bg', 'bgpitcher', 'bbbatter', 'interaction'])
 
@@ -53,7 +55,8 @@ def handle_event(e):
     if e.type == SDL_MOUSEBUTTONDOWN:
             if e.button == SDL_BUTTON_LEFT:
                 if(ball.area < ball.ballwidth / 2 * 0.25):
-                    batter.Check_collision(ball)
+                    if batter.Check_collision(ball) is not None:
+                        gfw.push(Defending  )
            
 
     
