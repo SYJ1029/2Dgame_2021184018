@@ -155,9 +155,11 @@ class VertFillBackground(Background):
 
 class ScrollBackground(Sprite):
     def __init__(self, filename):
-        super().__init__(filename, 0, 0)
+        super().__init__(filename, 200, 300)
         self.max_scroll_x = self.width - get_canvas_width()
         self.max_scroll_y = self.height - get_canvas_height()
+        self.width = get_canvas_width() - 100
+        self.height = get_canvas_height() - 100
 
     def draw(self):
         x, y = round(self.x), round(self.y)
@@ -223,3 +225,39 @@ class InfiniteScrollBackground(ScrollBackground):
 
         # quadrant 1
         self.image.clip_draw_to_origin(0, 0, cw - q3w, ch - q3h, q3w, q3h)
+
+
+
+class ClipedScrollBackGround(Sprite):
+    def __init__(self, filename):
+        super().__init__(filename, 200, 300)
+        self.max_scroll_x = self.width - get_canvas_width()
+        self.max_scroll_y = self.height - get_canvas_height()
+        self.width = get_canvas_width() - 100
+        self.height = get_canvas_height() - 100
+
+    def draw(self):
+        x, y = round(self.x), round(self.y)
+        middlex, middley = self.width//3, self.height//2
+        self.image.clip_draw(middlex, middley, 320, 180, get_canvas_width()//2, get_canvas_height()//2, get_canvas_width(), get_canvas_height())
+
+    def scroll(self, dx, dy):
+        self.scrollTo(self.x + dx, self.y + dy)
+
+    def scrollTo(self, x, y):
+        self.x = clamp(0, x, self.max_scroll_x)
+        self.y = clamp(0, y, self.max_scroll_y)
+
+    def show(self, x, y):
+        hw, hh = get_canvas_width() // 2, get_canvas_height() // 2
+        self.x = clamp(0, x - hw, self.max_scroll_x)
+        self.y = clamp(0, y - hh, self.max_scroll_y)
+
+    def to_screen(self, x, y):
+        return x - self.x, y - self.y
+
+    def from_screen(self, x, y):
+        return x + self.x, y + self.y
+
+    def get_bb(self):
+        return 0, 0, self.width, self.height
