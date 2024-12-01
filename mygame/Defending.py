@@ -2,7 +2,7 @@ from pico2d import *
 from gfw import *
 from Pitcher import Pitcher
 from Batter import Batter
-from Ball import Ball
+from Ball import *
 from Player import Player
 
 
@@ -28,9 +28,15 @@ def enter():
     team1 = [ Player(f'res/Pitcher.png', basePos[a][0], basePos[a][1]) for a in range(9)]
     team2 = [ Player(f'res/Pitcher.png', basePos[a][0], basePos[a][1]) for a in range(9)]
 
+    ball = Ball([0, 0], 610, 240)
+
     for i in range(9):
         world.append(team1[i], world.layer.Objects)
 
+    ball.inited = True
+    ball.godraw = True
+    ball.hit = True
+    world.append(ball, world.layer.Objects)
 
 
 

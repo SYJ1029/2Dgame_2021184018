@@ -2,7 +2,7 @@ from pico2d import *
 from gfw import *
 from Pitcher import Pitcher
 from Batter import Batter
-from Ball import Ball
+from Ball import *
 import Defending
 
 
@@ -24,7 +24,7 @@ def enter():
 
     pitcher = Pitcher()
     batter = Batter()
-    ball = Ball([0, 0])
+    ball = Ball([0, 0], 610, 240)
 
 
     world.append(pitcher, world.layer.bgpitcher)
@@ -55,8 +55,13 @@ def handle_event(e):
     if e.type == SDL_MOUSEBUTTONDOWN:
             if e.button == SDL_BUTTON_LEFT:
                 if(ball.area < ball.ballwidth / 2 * 0.25):
-                    if batter.Check_collision(ball) is not None:
-                        gfw.push(Defending  )
+                    overlaparea = batter.Check_collision(ball)
+                    if overlaparea is not None:
+                        ball.dx = overlaparea / 100
+                        ball.dy = overlaparea / 100
+                        gfw.push(Defending)
+                    else:
+                        pass
            
 
     
