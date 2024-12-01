@@ -8,11 +8,11 @@ class Ball(Sprite):
 
 
 
-    def __init__(self, ballarea):
-        super().__init__(f'res/Ball.png',  600, 360 - 50)
+    def __init__(self, ballarea, x, y):
+        super().__init__(f'res/Ball.png',  610, 240)
         
         self.area = 0
-        self.center = [610, 240]
+        self.center = [x, y]
         self.center += ballarea
         self.ballwidth = 40
         self.ballheight = 40
@@ -21,8 +21,10 @@ class Ball(Sprite):
         self.t = 0
         self.dx = 0
         self.dy = 0 
-        self.inited = False
         self.godraw = False
+
+        self.z = 0
+        self.hit = False
 
     def initbbpos():
         pass
@@ -61,7 +63,7 @@ class Ball(Sprite):
         self.inited = False
 
     def update(self):
-        if(self.godraw):
+        if(self.godraw and self.hit == False):
             self.area -= 0.1
             self.move()
         
@@ -78,4 +80,5 @@ class Ball(Sprite):
     def get_bb(self):
         return (self.center[0] - (self.ballwidth / 2 - self.area), self.center[1] - (self.ballheight / 2 - self.area), 
                 self.center[0] + (self.ballwidth / 2 - self.area), self.center[1] + (self.ballheight / 2 - self.area))
+
 
