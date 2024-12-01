@@ -1,11 +1,10 @@
 from pico2d import * 
 from gfw import *
-from Ball import Ball
+from Ball import *
 
 
 class Player(Sprite):
 	def __init__(self, filename, x, y):
-
 		super().__init__(filename,  x, y)
 
 	def handle_event(e):
