@@ -13,6 +13,10 @@ canvas_height = 720
 shows_bounding_box = True
 shows_object_count = True
 
+basePos = [[550, 580], [550, 250], 
+           [870, 680], [650, 850], [330, 750], [230, 680],
+           [150, 900], [550, 1050], [1100, 900]]
+
 def enter():
 
     bg = ClipedScrollBackGround(f'res/Stadium_2.png')
@@ -21,10 +25,10 @@ def enter():
 
     global team1
     global team2
-    team1 = [ Player(f'res/Pitcher.png', a * 10, a * 10) for a in range(10)]
-    team2 = [ Player(f'res/Pitcher.png', a * 10, a * 10) for a in range(10)]
+    team1 = [ Player(f'res/Pitcher.png', basePos[a][0], basePos[a][1]) for a in range(9)]
+    team2 = [ Player(f'res/Pitcher.png', basePos[a][0], basePos[a][1]) for a in range(9)]
 
-    for i in range(10):
+    for i in range(9):
         world.append(team1[i], world.layer.Objects)
 
 
