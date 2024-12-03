@@ -28,8 +28,6 @@ class Sprite:
         self.x, self.y = x, y
     def draw(self):
         self.image.draw(self.x, self.y)
-    def update(self):
-        pass
     def get_bb(self):
         l = self.x - self.width // 2
         b = self.y - self.height // 2
@@ -115,6 +113,9 @@ class Background(Sprite):
         super().__init__(filename, cw // 2, ch // 2)
         self.width = cw
         self.height = ch
+    
+    def update(self):
+        pass
 
     def draw(self):
         self.image.draw(self.x, self.y, self.width, self.height)
@@ -231,16 +232,19 @@ class InfiniteScrollBackground(ScrollBackground):
 class ClipedScrollBackGround(Sprite):
     def __init__(self, filename):
         super().__init__(filename, 200, 300)
-        self.max_scroll_x = self.width - get_canvas_width()
-        self.max_scroll_y = self.height - get_canvas_height()
+        self.max_scroll_x = get_canvas_width()
+        self.max_scroll_y = get_canvas_height()
         self.width = get_canvas_width() - 100
         self.height = get_canvas_height() - 100
-        self.middlex = self.width//3
-        self.middley = self.height//2
+        self.x = self.width//3
+        self.y = self.height//2
 
+    def update(self):
+        pass
+    
     def draw(self):
         x, y = round(self.x), round(self.y)
-        self.image.clip_draw(self.middlex, self.middley, 320, 180, get_canvas_width()//2, get_canvas_height()//2, get_canvas_width(), get_canvas_height())
+        self.image.clip_draw(x, y, 320, 180, get_canvas_width()//2, get_canvas_height()//2, get_canvas_width(), get_canvas_height())
 
     def scroll(self, dx, dy):
         self.scrollTo(self.x + dx, self.y + dy)

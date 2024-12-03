@@ -42,7 +42,7 @@ def enter():
 
     ball.dx = balldelta[0]
     ball.dy = balldelta[1]
-
+    ball.bg = bg
 
 
 

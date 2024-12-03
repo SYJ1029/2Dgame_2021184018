@@ -57,8 +57,8 @@ def handle_event(e):
                 if(ball.area < ball.ballwidth / 2 * 0.25):
                     overlap = batter.Check_collision(ball)
                     if overlap is not None:
-                        ball.dx = (overlap[1][0] - overlap[0][0]) / 3.5
-                        ball.dy = (overlap[1][1] - overlap[0][1]) / 2
+                        ball.dx = (overlap[1][0] - overlap[0][0]) / 20
+                        ball.dy = (overlap[1][1] - overlap[0][1]) / 20
 
                         print(f'{overlap[0][0]=}\n')
                         if(overlap[0][0] < 650.0):
