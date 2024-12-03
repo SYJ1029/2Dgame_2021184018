@@ -24,7 +24,7 @@ def enter():
 
     pitcher = Pitcher()
     batter = Batter()
-    ball = Ball([0, 0], 610, 240)
+    ball = BallAttack([0, 0], 610, 240)
 
 
     world.append(pitcher, world.layer.bgpitcher)
@@ -48,23 +48,39 @@ def handle_event(e):
 
     if e.type == SDL_KEYDOWN and e.key == SDLK_1:
         print(world.objects)
-    if e.type == SDL_KEYDOWN and e.key == SDLK_RETURN:
+    if e.type == SDL_KEYDOWN and (e.key == SDLK_KP_ENTER) :
         if(ball.inited == False):
             ball.inited = True
             ball.godraw = True
     if e.type == SDL_MOUSEBUTTONDOWN:
             if e.button == SDL_BUTTON_LEFT:
                 if(ball.area < ball.ballwidth / 2 * 0.25):
-                    overlaparea = batter.Check_collision(ball)
-                    if overlaparea is not None:
-                        ball.dx = overlaparea / 100
-                        ball.dy = overlaparea / 100
-                        gfw.push(Defending)
+                    overlap = batter.Check_collision(ball)
+                    if overlap is not None:
+                        ball.dx = (overlap[1][0] - overlap[0][0]) / 3.5
+                        ball.dy = (overlap[1][1] - overlap[0][1]) / 2
+
+                        print(f'{overlap[0][0]=}\n')
+                        if(overlap[0][0] < 650.0):
+                            if(overlap[0][0] > 620):
+                                ball.dx = 0
+                            else:
+                                ball.dx *= -1
+
+                        balldelta[0] = (ball.dx)
+                        balldelta[1] = (ball.dy)
+
+                        print(ball.godraw)
+                        if(overlap[2] < 400 or ball.godraw == False):
+                            pass
+                        else:
+                            gfw.push(Defending)
+
                     else:
                         pass
            
-
     
+
     ball.handle_event(e)
 
 if __name__ == '__main__':

@@ -235,11 +235,12 @@ class ClipedScrollBackGround(Sprite):
         self.max_scroll_y = self.height - get_canvas_height()
         self.width = get_canvas_width() - 100
         self.height = get_canvas_height() - 100
+        self.middlex = self.width//3
+        self.middley = self.height//2
 
     def draw(self):
         x, y = round(self.x), round(self.y)
-        middlex, middley = self.width//3, self.height//2
-        self.image.clip_draw(middlex, middley, 320, 180, get_canvas_width()//2, get_canvas_height()//2, get_canvas_width(), get_canvas_height())
+        self.image.clip_draw(self.middlex, self.middley, 320, 180, get_canvas_width()//2, get_canvas_height()//2, get_canvas_width(), get_canvas_height())
 
     def scroll(self, dx, dy):
         self.scrollTo(self.x + dx, self.y + dy)

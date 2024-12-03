@@ -55,7 +55,8 @@ class Batter(Sprite):
         if overlap != None:
             area = (overlap[1][0] - overlap[0][0]) * (overlap[1][1] - overlap[0][1])
             print(area)
-            return area
+            overlap.append(area)
+            return overlap
         
         return None
    
