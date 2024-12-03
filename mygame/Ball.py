@@ -2,6 +2,8 @@ from pico2d import *
 from gfw import *
 import copy
 
+global balldelta
+balldelta = list([0, 0])
 
 
 class Ball(Sprite):
@@ -24,27 +26,13 @@ class Ball(Sprite):
         self.godraw = False
 
         self.z = 0
-        self.hit = False
 
     def initbbpos():
         pass
     
     def handle_event(self, e):
-        if e.type == SDL_KEYDOWN:
-            if e.key == SDLK_RETURN and self.dx == 0:
-                self.area = self.ballwidth / 2
-                self.dx = (self.center[0]) - self.x
-                self.dy = (self.center[1]) - self.y
-            if e.key >= SDLK_1 and e.key <= SDLK_9:
-                token = e.key - SDLK_0 - 1
-                row = token // 3
-                column = token % 3
-                print(row, column)
+        pass
 
-                self.center[0] = self.initpos[0] + column * self.ballwidth
-                self.center[1] = self.initpos[1] - row * self.ballheight
-
-                pass
 
     
     
@@ -63,13 +51,13 @@ class Ball(Sprite):
         self.inited = False
 
     def update(self):
-        if(self.godraw and self.hit == False):
+        if(self.godraw):
             self.area -= 0.1
             self.move()
         
         if(self.area <= 0):
             self.clear()
-        
+
         #print(self.area)
 
 
@@ -82,3 +70,56 @@ class Ball(Sprite):
                 self.center[0] + (self.ballwidth / 2 - self.area), self.center[1] + (self.ballheight / 2 - self.area))
 
 
+
+
+class BallAttack(Ball):
+    def __init__(self, ballarea, x, y):
+        super().__init__(ballarea, x, y)
+        self.hit = False
+
+
+    def handle_event(self, e):
+        if e.type == SDL_KEYDOWN:
+            if e.key == SDLK_KP_ENTER and self.dx == 0:
+                self.area = self.ballwidth / 2
+                self.dx = (self.center[0]) - self.x
+                self.dy = (self.center[1]) - self.y
+            if e.key >= SDLK_KP_1 and e.key <= SDLK_KP_9:
+                token = e.key - SDLK_KP_0
+                row = token // 3
+                column = token % 3
+                print(row, column)
+
+                self.center[0] = self.initpos[0] + column * self.ballwidth
+                self.center[1] = self.initpos[1] + row * self.ballheight
+
+
+    def update(self):
+        if(self.godraw and self.hit == False):
+            self.area -= 0.1
+            self.move()
+        
+        if(self.area <= 0):
+            self.clear()
+
+
+class BallDefence(Ball):
+    def __init__(self, ballarea, x, y):
+        super().__init__(ballarea, x, y)
+        self.t = 1
+        
+    def move(self):
+        self.x += self.dx * self.t
+        self.y += self.dy * self.t
+        if(self.t >= 0.0):
+            self.t -= 0.01
+
+    def update(self):
+        if(self.godraw):
+            self.move()
+        
+        # if(self.area <= 0):
+        #     self.clear()
+
+    def handle_event(self, e):
+        pass

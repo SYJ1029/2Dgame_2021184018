@@ -6,7 +6,7 @@ from Ball import *
 from Player import Player
 
 
-world = World(['bg', 'Objects', 'controller'])
+world = World(['bg', 'Objects', 'Ball', 'controller'])
 
 canvas_width = 1280
 canvas_height = 720
@@ -23,12 +23,13 @@ def enter():
     world.append(bg, world.layer.bg)
     world.bg = bg
 
+    print(balldelta)
     global team1
     global team2
     team1 = [ Player(f'res/Pitcher.png', basePos[a][0], basePos[a][1]) for a in range(9)]
     team2 = [ Player(f'res/Pitcher.png', basePos[a][0], basePos[a][1]) for a in range(9)]
 
-    ball = Ball([0, 0], 610, 240)
+    ball = BallDefence([0, 0], 550, 250)
 
     for i in range(9):
         world.append(team1[i], world.layer.Objects)
@@ -36,14 +37,19 @@ def enter():
     ball.inited = True
     ball.godraw = True
     ball.hit = True
-    world.append(ball, world.layer.Objects)
+    ball.area = 10
+    world.append(ball, world.layer.Ball)
 
+    ball.dx = balldelta[0]
+    ball.dy = balldelta[1]
 
 
 
 
 
 def exit():
+    balldelta[0] = 0
+    balldelta[1] = 0
     world.clear()
 
 def pause():
@@ -53,7 +59,8 @@ def resume():
     print('[main.resume()]')
 
 def handle_event(e):
-    pass
+    if e.type == SDL_KEYDOWN and e.key == SDLK_RETURN:
+         print(world.objects)
 
 if __name__ == '__main__':
     gfw.start_main_module()

@@ -31,7 +31,10 @@ class World:
         for go in self.all_objects_reversed():
             go.update()
     def draw(self):
+        # cnt = 0
         for go in self.all_objects():
+            # cnt += 1
+            # print(f'{cnt=} {go=}')
             go.draw()
         if gfw.shows_bounding_box:
             for go in self.all_objects():
