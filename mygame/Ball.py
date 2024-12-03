@@ -57,7 +57,7 @@ class Ball(Sprite):
         
         if(self.area <= 0):
             self.clear()
-
+        self.bg.scroll(self.dx, self.dy)
         #print(self.area)
 
 
@@ -112,12 +112,13 @@ class BallDefence(Ball):
         self.x += self.dx * self.t
         self.y += self.dy * self.t
         if(self.t >= 0.0):
-            self.t -= 0.01
+            self.t -= 0.1
 
     def update(self):
         if(self.godraw):
             self.move()
-        
+
+        self.bg.scroll(self.dx, self.dy)
         # if(self.area <= 0):
         #     self.clear()
 
