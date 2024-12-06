@@ -32,13 +32,14 @@ class Player(Sprite):
 
 	def update(self):
 		if(self.ball.defnum == self.num):
-			self.move()
+			# self.move()
+			print(f'({self.initx=}, {self.inity=})')
 
 		self.x = self.initx - (self.ball.dx * self.ball.t) * 4
 		self.y = self.inity - (self.ball.dy * self.ball.t) * 4
 
 
-		self.ball.distlist.append(self.dist())
+		self.ball.distlist.append([self.dist(), self.num])
 
 	def draw(self):
 		self.image.draw(self.x, self.y)
