@@ -4,6 +4,7 @@ from Pitcher import Pitcher
 from Batter import Batter
 from Ball import *
 from Player import Player
+import math
 
 
 world = World(['bg', 'Objects', 'Ball', 'controller'])
@@ -40,8 +41,8 @@ def enter():
     # print(balldelta)
     global team1
     global team2
-    team1 = [ Player(f'res/Pitcher.png', basePos[a][0], basePos[a][1], ball) for a in range(9)]
-    team2 = [ Player(f'res/Pitcher.png', basePos[a][0], basePos[a][1], ball) for a in range(9)]
+    team1 = [ Player(f'res/Pitcher.png', basePos[a][0], basePos[a][1], ball, a+1) for a in range(9)]
+    team2 = [ Player(f'res/Pitcher.png', basePos[a][0], basePos[a][1], ball, a+1) for a in range(9)]
 
 
     for i in range(9):
