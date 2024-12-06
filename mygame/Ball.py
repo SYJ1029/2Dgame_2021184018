@@ -11,7 +11,7 @@ class Ball(Sprite):
 
 
     def __init__(self, ballarea, x, y):
-        super().__init__(f'res/Ball.png',  610, 240)
+        super().__init__(f'res/Ball.png',  x, y)
         
         self.area = 0
         self.center = [x, y]
@@ -130,10 +130,10 @@ class BallDefence(Ball):
 
 
         mindist = float("inf")
-        for i in range(len(self.distlist)):
-            if(self.distlist[i] < mindist):
-                mindist = copy.deepcopy(self.distlist[i])
-                self.defnum = i + 1
+        for i in range(len(self.distlist), 0, -1):
+            if(self.distlist[i - 1] < mindist):
+                mindist = copy.deepcopy(self.distlist[i - 1])
+                self.defnum = len(self.distlist) - i + 1 
 
         if(self.t >= 1):
             print(f'{self.distlist=}')

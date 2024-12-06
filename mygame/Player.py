@@ -37,6 +37,7 @@ class Player(Sprite):
 		self.x = self.initx - (self.ball.dx * self.ball.t) * 4
 		self.y = self.inity - (self.ball.dy * self.ball.t) * 4
 
+
 		self.ball.distlist.append(self.dist())
 
 	def draw(self):
