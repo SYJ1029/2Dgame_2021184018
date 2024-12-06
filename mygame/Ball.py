@@ -106,19 +106,22 @@ class BallAttack(Ball):
 class BallDefence(Ball):
     def __init__(self, ballarea, x, y):
         super().__init__(ballarea, x, y)
-        self.t = 1
+        self.t = 0.01
+        self.z = 0
+        self.dz = 1
+        self.theta = 0
         
     def move(self):
-        self.x += self.dx * self.t
-        self.y += self.dy * self.t
-        if(self.t >= 0.0):
-            self.t -= 0.1
+        if(self.t < 1):
+            self.x = self.initpos[0] + self.dx * self.t
+            self.y = self.initpos[1] + self.dy * self.t
+            self.t += 0.01
 
     def update(self):
         if(self.godraw):
             self.move()
 
-        self.bg.scroll(self.dx, self.dy)
+        self.bg.scrollTo(self.x, self.y)
         # if(self.area <= 0):
         #     self.clear()
 
