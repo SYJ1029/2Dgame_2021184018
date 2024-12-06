@@ -4,7 +4,6 @@ from Pitcher import Pitcher
 from Batter import Batter
 from Ball import *
 from Player import Player
-import math
 
 
 world = World(['bg', 'Objects', 'Ball', 'controller'])
