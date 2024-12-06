@@ -110,6 +110,7 @@ class BallDefence(Ball):
         self.z = 0
         self.dz = 1
         self.theta = 0
+        self.initxy = [copy.deepcopy(x), copy.deepcopy(y)]
         
     def move(self):
         if(self.t < 1):
