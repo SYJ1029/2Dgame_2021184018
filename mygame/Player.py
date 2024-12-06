@@ -17,8 +17,8 @@ class Player(Sprite):
 		pass
 
 	def update(self):
-		self.x = self.initx - (self.ball.x - self.ball.initxy[0])
-		self.y = self.inity - (self.ball.y - self.ball.initxy[1])
+		self.x = self.initx - (self.ball.dx * self.ball.t) * 4
+		self.y = self.inity - (self.ball.dy * self.ball.t) * 4
 
 	def draw(self):
 		self.image.draw(self.x, self.y)
