@@ -123,12 +123,21 @@ class BallDefence(Ball):
     def update(self):
         if(self.godraw):
             self.move()
-            print(f'{self.distlist}')
 
         self.bg.scrollTo(self.x + self.ballwidth, self.y + self.ballheight)
         # if(self.area <= 0):
         #     self.clear()
 
+
+        mindist = float("inf")
+        for i in range(len(self.distlist)):
+            if(self.distlist[i] < mindist):
+                mindist = copy.deepcopy(self.distlist[i])
+                self.defnum = i + 1
+
+        if(self.t >= 1):
+            print(f'{self.distlist=}')
+            print(f'{mindist=}, {self.defnum=}')
         self.distlist.clear()
 
     def handle_event(self, e):
