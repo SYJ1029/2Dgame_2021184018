@@ -6,7 +6,7 @@ from Ball import *
 from Player import Player
 
 
-world = World(['bg', 'Ball', 'Objects', 'controller'])
+world = World(['bg', 'Objects', 'Ball', 'controller'])
 
 canvas_width = 1280
 canvas_height = 720
@@ -26,7 +26,7 @@ def enter():
     world.append(bg, world.layer.bg)
     world.bg = bg
 
-    ball = BallDefence([0, 0], 390, 260)
+    ball = BallDefence([0, 0], 390, 260, 0)
 
     ball.inited = True
     ball.godraw = True

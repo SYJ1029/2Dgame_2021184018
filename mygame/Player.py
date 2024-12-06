@@ -18,9 +18,9 @@ class Player(Sprite):
 		pass
 
 	def move(self):
-		self.initx += (self.ball.x - self.initx) * self.speed
-		self.inity += (self.ball.y - self.inity) * self.speed
-		print(f'{self.ball.x - self.init.x}\n')
+		# self.initx += (self.ball.x - self.initx) * self.speed
+		# self.inity += (self.ball.y - self.inity) * self.speed
+		pass
 
 	def update(self):
 		self.move()
