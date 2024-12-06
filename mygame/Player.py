@@ -16,7 +16,12 @@ class Player(Sprite):
 	def handle_event(e):
 		pass
 
+	def move(self):
+		pass
 	def update(self):
+
+
+
 		self.x = self.initx - (self.ball.dx * self.ball.t) * 4
 		self.y = self.inity - (self.ball.dy * self.ball.t) * 4
 
