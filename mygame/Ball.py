@@ -104,13 +104,15 @@ class BallAttack(Ball):
 
 
 class BallDefence(Ball):
-    def __init__(self, ballarea, x, y):
+    def __init__(self, ballarea, x, y, position):
         super().__init__(ballarea, x, y)
         self.t = 0.01
         self.z = 0
         self.dz = 1
         self.theta = 0
         self.initxy = [copy.deepcopy(x), copy.deepcopy(y)]
+        self.defnum = position
+        self.distlist = list()
         
     def move(self):
         if(self.t < 1):
