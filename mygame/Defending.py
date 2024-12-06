@@ -29,7 +29,7 @@ def enter():
     team1 = [ Player(f'res/Pitcher.png', basePos[a][0], basePos[a][1]) for a in range(9)]
     team2 = [ Player(f'res/Pitcher.png', basePos[a][0], basePos[a][1]) for a in range(9)]
 
-    ball = BallDefence([0, 0], 550, 250)
+    ball = BallDefence([0, 0], 390, 260)
 
     for i in range(9):
         world.append(team1[i], world.layer.Objects)

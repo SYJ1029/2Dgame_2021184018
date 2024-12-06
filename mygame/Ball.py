@@ -121,7 +121,7 @@ class BallDefence(Ball):
         if(self.godraw):
             self.move()
 
-        self.bg.scrollTo(self.x, self.y)
+        self.bg.scrollTo(self.x + self.ballwidth, self.y + self.ballheight)
         # if(self.area <= 0):
         #     self.clear()
 
