@@ -114,21 +114,31 @@ class BallDefence(Ball):
         self.defnum = position
         self.distlist = list()
         self.first = True
+
+        self.prevx = copy.deepcopy(self.x)
+        self.prevy = copy.deepcopy(self.y)
         
     def move(self):
         if(self.t < 1):
             self.x = self.initpos[0] + self.dx * self.t
             self.y = self.initpos[1] + self.dy * self.t
+            self.prevx = self.initpos[0] + self.dx * self.t * 0.25
+            self.prevy = self.initpos[1] + self.dy * self.t * 0.25
             self.t += 0.01
+            
 
+            # self.prevx = copy.deepcopy(self.x)
+            # self.prevy = copy.deepcopy(self.y)
+       
+   
     def update(self):
         if(self.godraw):
             self.move()
 
-        self.bg.scrollTo(self.x + self.ballwidth, self.y + self.ballheight)
+       
         # if(self.area <= 0):
         #     self.clear()
-
+        self.bg.scrollTo(self.prevx + self.ballwidth, self.prevy + self.ballheight)
 
         mindist = float("inf")
         for i in range(len(self.distlist)):
@@ -141,6 +151,7 @@ class BallDefence(Ball):
                 print(f'<ball>\n {self.dx=}, {self.dy=}')
                 print(f'{self.x=}, {self.y=}')
                 print(f'{mindist=}, {self.defnum=}')
+                print(self.distlist[9 - self.defnum])
                 self.first = False
         else:
             self.first = True
