@@ -5,7 +5,7 @@ from Ball import Ball
 class Batter(Sprite):
 
     def __init__(self):
-        super().__init__(f'res/Batter.png', 640 + 150, 200)
+        super().__init__(f'res/Batter.png', 640 + 125, 200)
         self.center = [0, 0]
         self.batwidth = 40
         self.batheight = 40
