@@ -41,5 +41,24 @@ class Player(Sprite):
 
 		self.ball.distlist.append([self.dist(), self.num])
 
+
+
 	def draw(self):
 		self.image.draw(self.x, self.y)
+
+
+	def GetOverlapBox(self):
+		playerbb = [[self.initx - self.batwidth / 2, self.inity - self.batheight / 2], 
+			[self.initx + self.batwidth / 2, self.inity + self.batheight / 2]]
+
+		ballbb = [[self.ball.center[0] - self.ball.ballwidth / 2, self.ball.center[1] - self.ball.ballwidth / 2], 
+    		[self.ball.center[0] + self.ball.ballwidth / 2, self.ball.center[1] + self.ball.ballwidth / 2]]
+
+		overlap1 = [max(playerbb[0][0], ballbb[0][0]), max(playerbb[0][1],ballbb[0][1])]
+		overlap2 = [min(playerbb[1][0], ballbb[1][0]), min(playerbb[1][1], ballbb[1][1])]
+		# print(f'overlapbb: {list(overlap1)}, {list(overlap2)}')
+
+		if overlap1[0] < overlap2[0] and overlap1[1] < overlap2[1]:
+			return [overlap1, overlap2]
+		else:
+			return None  # 겹치는 영역 없음
