@@ -161,3 +161,7 @@ class BallDefence(Ball):
 
     def handle_event(self, e):
         pass
+
+    def draw(self):
+        if self.godraw:
+            self.image.draw(self.initxy[0], self.initxy[1], self.ballwidth, self.ballheight)
