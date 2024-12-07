@@ -22,11 +22,11 @@ class Player(Sprite):
 	def move(self):
 		self.initx += (self.ball.x - self.initx) * self.speed
 		self.inity += (self.ball.y - self.inity) * self.speed
-
+		
 
 	def dist(self):
-		x = self.ball.x - self.initx
-		y = self.ball.y - self.inity
+		x = (self.ball.initpos[0] + self.ball.dx) - self.initx
+		y = (self.ball.initpos[1] + self.ball.dy) - self.inity
 
 		return sqrt(x ** 2 + y ** 2)
 
