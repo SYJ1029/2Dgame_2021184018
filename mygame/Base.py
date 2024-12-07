@@ -25,7 +25,12 @@ class Base:
         pass
 
     def update(self):
-        pass
+        mindist = float("inf")
+        for i in range(len(self.distlist)):
+            if(self.distlist[i][0] < mindist):
+                mindist = copy.deepcopy(self.distlist[i][0])
+                self.defnum = self.distlist[i][1]
+            
 
     def draw(self): 
         pass
