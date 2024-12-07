@@ -113,6 +113,7 @@ class BallDefence(Ball):
         self.initxy = [copy.deepcopy(x), copy.deepcopy(y)]
         self.defnum = position
         self.distlist = list()
+        self.first = True
         
     def move(self):
         if(self.t < 1):
@@ -136,8 +137,14 @@ class BallDefence(Ball):
                 self.defnum = self.distlist[i][1]
 
         if(self.t >= 1):
-            print(f'{self.x=}, {self.y=}')
-            print(f'{mindist=}, {self.defnum=}')
+            if(self.first == True):
+                print(f'<ball>\n {self.dx=}, {self.dy=}')
+                print(f'{self.x=}, {self.y=}')
+                print(f'{mindist=}, {self.defnum=}')
+                self.first = False
+        else:
+            self.first = True
+
 
         self.distlist.clear()
 

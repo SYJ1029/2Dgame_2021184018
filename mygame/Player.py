@@ -20,9 +20,9 @@ class Player(Sprite):
 		pass
 
 	def move(self):
-		# self.initx += (self.ball.x - self.initx) * self.speed
-		# self.inity += (self.ball.y - self.inity) * self.speed
-		pass
+		self.initx += (self.ball.x - self.initx) * self.speed
+		self.inity += (self.ball.y - self.inity) * self.speed
+
 
 	def dist(self):
 		x = self.ball.x - self.initx
@@ -32,11 +32,11 @@ class Player(Sprite):
 
 	def update(self):
 		if(self.ball.defnum == self.num):
-			# self.move()
-			print(f'({self.initx=}, {self.inity=})')
+			self.move()
+			# print(f'({self.initx=}, {self.inity=})')
 
-		self.x = self.initx - (self.ball.dx * self.ball.t) * 4
-		self.y = self.inity - (self.ball.dy * self.ball.t) * 4
+		self.x = self.initx - (self.ball.dx * self.ball.t)
+		self.y = self.inity - (self.ball.dy * self.ball.t)
 
 
 		self.ball.distlist.append([self.dist(), self.num])
