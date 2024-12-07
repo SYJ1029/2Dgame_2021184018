@@ -106,7 +106,7 @@ class BallAttack(Ball):
 class BallDefence(Ball):
     def __init__(self, ballarea, x, y, position):
         super().__init__(ballarea, x, y)
-        self.t = 0.01
+        self.t = 0
         self.z = 0
         self.dz = 1
         self.theta = 0

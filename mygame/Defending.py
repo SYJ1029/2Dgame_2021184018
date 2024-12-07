@@ -4,9 +4,10 @@ from Pitcher import Pitcher
 from Batter import Batter
 from Ball import *
 from Player import Player
+from Base import Base
 
 
-world = World(['bg', 'Objects', 'Ball', 'controller'])
+world = World(['bg','Objects', 'Ball', 'controller'])
 
 canvas_width = 1280
 canvas_height = 720
@@ -19,6 +20,8 @@ shows_object_count = True
 basePos = [[390, 600], [390, 260], 
            [710, 680], [490, 950], [230, 950], [230 - 160, 680],
            [150 - 250, 1250], [550 - 160, 1350], [1100 - 50, 1250]]
+
+bbasePos = [[750, 650], [450, 950], [50, 650], [390, 260]]
 
 def enter():
 
@@ -38,14 +41,23 @@ def enter():
     ball.bg = bg
 
     # print(balldelta)
+    global base
+    base = [Base(a+1, bbasePos[a]) for a in range(4)]
+
     global team1
     global team2
-    team1 = [ Player(f'res/Pitcher.png', basePos[a][0], basePos[a][1], ball, a+1) for a in range(9)]
-    team2 = [ Player(f'res/Pitcher.png', basePos[a][0], basePos[a][1], ball, a+1) for a in range(9)]
+    team1 = [ Player(f'res/Pitcher.png', basePos[a][0], basePos[a][1], ball, base, a+1) for a in range(9)]
+    team2 = [ Player(f'res/Pitcher.png', basePos[a][0], basePos[a][1], ball, base, a+1) for a in range(9)]
 
+   
 
     for i in range(9):
         world.append(team1[i], world.layer.Objects)
+    
+    for i in range(4):
+        world.append(base[i], world.layer.Objects)
+
+    
     world.append(ball, world.layer.Ball)
 
 
@@ -64,6 +76,11 @@ def resume():
     print('[main.resume()]')
 
 def handle_event(e):
+    for a in range(9):
+        if a < 4:
+            base[a].handle_event(e)
+        team1[a].handle_event(e)
+
     if e.type == SDL_KEYDOWN and e.key == SDLK_RETURN:
          print(world.objects)
 
