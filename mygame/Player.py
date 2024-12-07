@@ -6,23 +6,42 @@ from math import *
 
 
 class Player(Sprite):
-	def __init__(self, filename, x, y, ball, num):
+	def __init__(self, filename, x, y, ball, base, num):
 		super().__init__(filename,  x, y)
 		self.initx = copy.deepcopy(self.x)
 		self.inity = copy.deepcopy(self.y)
 		self.ball = ball
+		self.base = base
+		self.baseIndex = 0
+
 		self.dx = 0
 		self.dy = 0
-		self.speed = 0.01
+		self.speed = 0.005
 		self.num = num
+		self.catch = False
 
-	def handle_event(e):
-		pass
+
+	def handle_event(self, e):
+		if e.type == SDL_KEYDOWN and e.key == SDLK_a:
+			self.ball.godraw = True
+			self.baseIndex = 2
+			
 
 	def move(self):
-		self.initx += (self.ball.x - self.initx) * self.speed
-		self.inity += (self.ball.y - self.inity) * self.speed
+		if(self.ball.defnum == self.num):
+			self.initx += (self.ball.x - self.initx) * self.speed
+			self.inity += (self.ball.y - self.inity) * self.speed
 		
+			overlap = self.GetOverlapBox()
+
+			if overlap != None:
+				self.ball.godraw = False
+				self.catch = True
+		else:
+			if(self.num <= 7 and self.num > 1):
+				self.initx += (self.base[self.baseIndex].x - self.initx) * self.speed
+				self.inity += (self.base[self.baseIndex].y - self.inity) * self.speed
+
 
 	def dist(self):
 		x = (self.ball.initpos[0] + self.ball.dx) - self.initx
@@ -31,9 +50,8 @@ class Player(Sprite):
 		return sqrt(x ** 2 + y ** 2)
 
 	def update(self):
-		if(self.ball.defnum == self.num):
-			self.move()
-			# print(f'({self.initx=}, {self.inity=})')
+
+		self.move()
 
 		self.x = self.initx - (self.ball.dx * self.ball.t)
 		self.y = self.inity - (self.ball.dy * self.ball.t)
@@ -48,11 +66,11 @@ class Player(Sprite):
 
 
 	def GetOverlapBox(self):
-		playerbb = [[self.initx - self.batwidth / 2, self.inity - self.batheight / 2], 
-			[self.initx + self.batwidth / 2, self.inity + self.batheight / 2]]
+		playerbb = [[self.initx - 20, self.inity - 20], 
+			[self.initx + 20, self.inity + 20]]
 
-		ballbb = [[self.ball.center[0] - self.ball.ballwidth / 2, self.ball.center[1] - self.ball.ballwidth / 2], 
-    		[self.ball.center[0] + self.ball.ballwidth / 2, self.ball.center[1] + self.ball.ballwidth / 2]]
+		ballbb = [[self.ball.x - self.ball.ballwidth / 2, self.ball.y - self.ball.ballwidth / 2], 
+    		[self.ball.x + self.ball.ballwidth / 2, self.ball.y + self.ball.ballwidth / 2]]
 
 		overlap1 = [max(playerbb[0][0], ballbb[0][0]), max(playerbb[0][1],ballbb[0][1])]
 		overlap2 = [min(playerbb[1][0], ballbb[1][0]), min(playerbb[1][1], ballbb[1][1])]
@@ -62,3 +80,10 @@ class Player(Sprite):
 			return [overlap1, overlap2]
 		else:
 			return None  # 겹치는 영역 없음
+		
+
+
+
+
+
+
