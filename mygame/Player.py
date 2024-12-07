@@ -5,6 +5,10 @@ import copy
 from math import *
 
 
+def dist(x, y):
+
+	return sqrt(x ** 2 + y ** 2)
+
 class Player(Sprite):
 	def __init__(self, filename, x, y, ball, base, num):
 		super().__init__(filename,  x, y)
