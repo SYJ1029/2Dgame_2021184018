@@ -117,13 +117,15 @@ class BallDefence(Ball):
 
         self.prevx = copy.deepcopy(self.x)
         self.prevy = copy.deepcopy(self.y)
+
+        self.drawpos = copy.deepcopy(self.initpos)
         
     def move(self):
         if(self.t < 1):
             self.x = self.initpos[0] + self.dx * self.t
             self.y = self.initpos[1] + self.dy * self.t
-            self.prevx = self.initpos[0] + self.dx * self.t * 0.25
-            self.prevy = self.initpos[1] + self.dy * self.t * 0.25
+            self.prevx = self.drawpos[0] + self.dx * self.t * 0.25
+            self.prevy = self.drawpos[1] + self.dy * self.t * 0.25
             self.t += 0.01
             
 
