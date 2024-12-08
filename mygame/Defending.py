@@ -41,15 +41,19 @@ def enter():
     ball.bg = bg
 
     # print(balldelta)
-    global base
-    base = [Base(a+1, bbasePos[a]) for a in range(4)]
+
 
     global team1
     global team2
-    team1 = [ Player(f'res/Pitcher.png', basePos[a][0], basePos[a][1], ball, base, a+1) for a in range(9)]
-    team2 = [ Player(f'res/Pitcher.png', basePos[a][0], basePos[a][1], ball, base, a+1) for a in range(9)]
+    team1 = [ Player(f'res/Pitcher.png', basePos[a][0], basePos[a][1], ball, a+1) for a in range(9)]
+    team2 = [ Player(f'res/Pitcher.png', basePos[a][0], basePos[a][1], ball, a+1) for a in range(9)]
 
-   
+    global base
+    base = [Base(a, bbasePos[a], team1) for a in range(4)]
+
+    for i in range(9):
+        team1[i].InitBase(base)
+        team2[i].InitBase(base)
 
     for i in range(9):
         world.append(team1[i], world.layer.Objects)
