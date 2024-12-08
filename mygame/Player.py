@@ -10,13 +10,12 @@ def dist(x, y):
 	return sqrt(x ** 2 + y ** 2)
 
 class Player(Sprite):
-	def __init__(self, filename, x, y, ball, base, num):
+	def __init__(self, filename, x, y, ball, num):
 		super().__init__(filename,  x, y)
 		self.initx = copy.deepcopy(self.x)
 		self.inity = copy.deepcopy(self.y)
 		self.ball = ball
-		self.base = base
-		self.baseIndex = 0
+		self.baseIndex = 5
 
 		self.dx = 0
 		self.dy = 0
@@ -25,10 +24,18 @@ class Player(Sprite):
 		self.catch = False
 
 
+	def InitBase(self, base):
+		self.base = base
+
 	def handle_event(self, e):
 		if e.type == SDL_KEYDOWN and e.key == SDLK_a:
-			self.ball.godraw = True
-			self.baseIndex = 2
+			if self.catch == True and self.baseIndex < 4:
+				self.ball.dx = (self.base[self.baseIndex].x - self.ball.x)
+				self.ball.dy = (self.base[self.baseIndex].y - self.ball.y)
+				self.ball.t = 0
+
+	
+				self.catch = False
 			
 
 	def move(self):
@@ -38,11 +45,17 @@ class Player(Sprite):
 		
 			overlap = self.GetOverlapBox()
 
-			if overlap != None:
+			if overlap is not None:
 				self.ball.godraw = False
+				self.ball.dx = 0
+				self.ball.dy = 0
+				self.ball.t = 10
 				self.catch = True
+
+				self.ball.initpos = copy.deepcopy([self.ball.x, self.ball.y])
+				# self.ball.drawpos = copy.deepcopy([self.ball.prevx, self.ball.prevy])
 		else:
-			if(self.num <= 7 and self.num > 1):
+			if(self.num <= 7 and self.num > 1 and self.baseIndex < 4):
 				self.initx += (self.base[self.baseIndex].x - self.initx) * self.speed
 				self.inity += (self.base[self.baseIndex].y - self.inity) * self.speed
 
