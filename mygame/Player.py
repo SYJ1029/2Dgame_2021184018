@@ -73,12 +73,16 @@ class Player(Sprite):
 
 		self.move()
 
+		if self.ball.t > self.t:
+			self.dx -= (self.ball.dx * self.speed * 2)
+			self.dy -= (self.ball.dy * self.speed * 2)
+			self.t = copy.deepcopy(self.ball.t)
+
 		# self.x = self.initx - (self.ball.dx * self.ball.t)
 		# self.y = self.inity - (self.ball.dy * self.ball.t)
-		if self.ball.t > self.t:
-			self.x -= (self.ball.dx * self.speed * 2)
-			self.y -= (self.ball.dy * self.speed * 2)
-			self.t = copy.deepcopy(self.ball.t)
+		self.x = self.initx + self.dx
+		self.y = self.inity + self.dy	
+
 
 		self.ball.distlist.append([self.dist(), self.num])
 
