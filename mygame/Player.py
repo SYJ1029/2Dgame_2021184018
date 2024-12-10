@@ -70,8 +70,10 @@ class Player(Sprite):
 
 		self.move()
 
-		self.x = self.initx - (self.ball.dx * self.ball.t)
-		self.y = self.inity - (self.ball.dy * self.ball.t)
+		# self.x = self.initx - (self.ball.dx * self.ball.t)
+		# self.y = self.inity - (self.ball.dy * self.ball.t)
+		self.x -= (self.ball.dx * 0.01)
+		self.y -= (self.ball.dy * 0.01)
 
 
 		self.ball.distlist.append([self.dist(), self.num])
