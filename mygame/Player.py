@@ -14,8 +14,11 @@ class Player(Sprite):
 		super().__init__(filename,  x, y)
 		self.initx = copy.deepcopy(self.x)
 		self.inity = copy.deepcopy(self.y)
+		self.x = copy.deepcopy(self.initx)
+		self.y = copy.deepcopy(self.inity)
 		self.ball = ball
 		self.baseIndex = 5
+		self.t = 0
 
 		self.dx = 0
 		self.dy = 0
@@ -49,7 +52,7 @@ class Player(Sprite):
 				self.ball.godraw = False
 				self.ball.dx = 0
 				self.ball.dy = 0
-				self.ball.t = 10
+				self.ball.t = 0
 				self.catch = True
 
 				self.ball.initpos = copy.deepcopy([self.ball.x, self.ball.y])
@@ -72,9 +75,10 @@ class Player(Sprite):
 
 		# self.x = self.initx - (self.ball.dx * self.ball.t)
 		# self.y = self.inity - (self.ball.dy * self.ball.t)
-		self.x -= (self.ball.dx * 0.01)
-		self.y -= (self.ball.dy * 0.01)
-
+		if self.ball.t > self.t:
+			self.x -= (self.ball.dx * self.speed * 2)
+			self.y -= (self.ball.dy * self.speed * 2)
+			self.t = copy.deepcopy(self.ball.t)
 
 		self.ball.distlist.append([self.dist(), self.num])
 

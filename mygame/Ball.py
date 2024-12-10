@@ -149,6 +149,8 @@ class BallDefence(Ball):
                 self.defnum = self.distlist[i][1]
 
         if(self.t >= 1):
+            # self.dx = 0
+            # self.dy = 0
             if(self.first == True):
                 print(f'<ball>\n {self.dx=}, {self.dy=}')
                 print(f'{self.x=}, {self.y=}')
