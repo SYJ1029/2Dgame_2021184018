@@ -25,24 +25,22 @@ class Player(Sprite):
 		self.speed = 0.005
 		self.num = num
 		self.catch = False
+		self.Bat = True
 
 
 	def InitBase(self, base):
 		self.base = base
 
 	def handle_event(self, e):
-		if e.type == SDL_KEYDOWN and e.key == SDLK_a:
+		if e.type == SDL_KEYDOWN:
 			if self.catch == True and self.baseIndex < 4:
-				self.ball.dx = (self.base[self.baseIndex].x - self.ball.x)
-				self.ball.dy = (self.base[self.baseIndex].y - self.ball.y)
-				self.ball.t = 0
-
-	
-				self.catch = False
+				if e.key == SDLK_a or e.key == SDLK_w or e.key == SDLK_s or e.key == SDLK_d:
+					self.ball.godraw = True
+					self.catch = False
 			
 
 	def move(self):
-		if(self.ball.defnum == self.num):
+		if(self.Bat and self.ball.defnum == self.num):
 			self.initx += (self.ball.x - self.initx) * self.speed
 			self.inity += (self.ball.y - self.inity) * self.speed
 		
@@ -54,11 +52,12 @@ class Player(Sprite):
 				self.ball.dy = 0
 				self.ball.t = 0
 				self.catch = True
+				self.Bat = False
 
 				self.ball.initpos = copy.deepcopy([self.ball.x, self.ball.y])
-				# self.ball.drawpos = copy.deepcopy([self.ball.prevx, self.ball.prevy])
+				self.ball.drawpos = copy.deepcopy([self.ball.prevx, self.ball.prevy])
 		else:
-			if(self.num <= 7 and self.num > 1 and self.baseIndex < 4):
+			if(self.num <= 6 and self.num > 1 and self.baseIndex < 4):
 				self.initx += (self.base[self.baseIndex].x - self.initx) * self.speed
 				self.inity += (self.base[self.baseIndex].y - self.inity) * self.speed
 
