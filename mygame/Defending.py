@@ -49,7 +49,9 @@ def enter():
     team2 = [ Player(f'res/Pitcher.png', basePos[a][0], basePos[a][1], ball, a+1) for a in range(9)]
 
     global base
-    base = [Base(a, bbasePos[a], team1) for a in range(4)]
+    base = [Base(a, bbasePos[a], ball, team1) for a in range(4)]
+
+    ball.InitBase(base)
 
     for i in range(9):
         team1[i].InitBase(base)
@@ -82,7 +84,7 @@ def resume():
 def handle_event(e):
     for a in range(9):
         if a < 4:
-            base[a].handle_event(e)
+            base[a].handle_event(e, 2)
         team1[a].handle_event(e)
 
     if e.type == SDL_KEYDOWN and e.key == SDLK_RETURN:

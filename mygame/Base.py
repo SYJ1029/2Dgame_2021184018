@@ -5,13 +5,13 @@ from Player import *
 
 
 class Base:
-    def __init__(self, basetype, pos, defender):
+    def __init__(self, basetype, pos, ball, defender):
         self.type = basetype
         self.x = pos[0]
         self.y = pos[1]
         self.x2 = pos[0] + 40
         self.y2 = pos[1] + 40
-        self.ball = 0
+        self.ball = ball
         self.InPlayer = [False, False]
         self.InBall = [False, False]
         self.CheckIn()
@@ -24,8 +24,12 @@ class Base:
         if self.type == 3:
             self.InPlayer = [True, True]
 
-    def handle_event(self, e):
-        pass
+    def handle_event(self, e, type):
+        if e.type == SDL_KEYDOWN and self.type == type:
+            if e.key == SDLK_a:
+                self.ball.dx = (self.x - self.ball.x)
+                self.ball.dy = (self.y - self.ball.y)
+                self.ball.t = 0
 
     def InitdistList(self):
         for i in range(len(self.defenderList)):
