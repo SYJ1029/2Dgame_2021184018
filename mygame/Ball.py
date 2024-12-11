@@ -119,6 +119,8 @@ class BallDefence(Ball):
         self.prevy = copy.deepcopy(self.y)
 
         self.drawpos = copy.deepcopy(self.initpos)
+        self.catch = False
+        self.bound = False
         
 
     def InitBase(self, base):
@@ -134,7 +136,8 @@ class BallDefence(Ball):
 
             # self.prevx = copy.deepcopy(self.x)
             # self.prevy = copy.deepcopy(self.y)
-       
+        else:
+            self.bound = True
    
     def update(self):
         if(self.godraw):
@@ -160,6 +163,10 @@ class BallDefence(Ball):
                 print(f'{mindist=}, {self.defnum=}')
                 print(self.distlist[9 - self.defnum])
                 self.first = False
+
+            
+            self.initpos = copy.deepcopy([self.x, self.y])
+            self.drawpos = copy.deepcopy([self.prevx, self.prevy])
         else:
             self.first = True
 

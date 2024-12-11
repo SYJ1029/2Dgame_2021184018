@@ -19,7 +19,7 @@ shows_object_count = True
 
 basePos = [[390, 600], [390, 260], 
            [710, 680], [490, 950], [230, 950], [230 - 160, 680],
-           [150 - 250, 1250], [550 - 160, 1350], [1100 - 50, 1250]]
+           [150 - 250, 1350], [550 - 160, 1450], [1100 - 50, 1350]]
 
 bbasePos = [[750, 650], [450, 950], [50, 650], [390, 260]]
 
@@ -82,14 +82,25 @@ def resume():
     print('[main.resume()]')
 
 def handle_event(e):
+    baseNumber = 2
+
+
+    if e.type == SDL_KEYDOWN:
+        if e.key == SDLK_RETURN:
+            print(world.objects)
+        if e.key == SDLK_a:
+            baseNumber = 2
+        elif e.key == SDLK_d:
+            baseNumber = 0
+        elif e.key == SDLK_w:
+            baseNumber = 1
+        elif e.key == SDLK_s:
+            baseNumber = 3
+
     for a in range(9):
         if a < 4:
-            base[a].handle_event(e, 2)
+            base[a].handle_event(e, baseNumber)
         team1[a].handle_event(e)
-
-    if e.type == SDL_KEYDOWN and e.key == SDLK_RETURN:
-         print(world.objects)
-
 if __name__ == '__main__':
     gfw.start_main_module()
 
