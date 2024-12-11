@@ -26,7 +26,7 @@ class Player(Sprite):
 		self.num = num
 		self.catch = False
 		self.Bat = True
-
+		self.token = [copy.deepcopy(self.initx), copy.deepcopy(self.inity)]
 
 	def InitBase(self, base):
 		self.base = base
@@ -40,10 +40,11 @@ class Player(Sprite):
 			
 
 	def move(self):
-		if(self.Bat and self.ball.defnum == self.num):
-			self.initx += (self.ball.x - self.initx) * self.speed
-			self.inity += (self.ball.y - self.inity) * self.speed
-		
+		if(self.Bat == True and self.ball.defnum == self.num):
+			
+			self.initx += (self.ball.x - self.token[0]) * self.speed
+			self.inity += (self.ball.y - self.token[1]) * self.speed
+			# print(f'{self.initx=}, {self.inity=}\n')
 			overlap = self.GetOverlapBox()
 
 			if overlap is not None:
@@ -51,15 +52,25 @@ class Player(Sprite):
 				self.ball.dx = 0
 				self.ball.dy = 0
 				self.ball.t = 0
-				self.catch = True
+				self.ball.catch = True
 				self.Bat = False
+				if self.ball.bound == False:
+					pass
 
 				self.ball.initpos = copy.deepcopy([self.ball.x, self.ball.y])
 				self.ball.drawpos = copy.deepcopy([self.ball.prevx, self.ball.prevy])
 		else:
-			if(self.num <= 6 and self.num > 1 and self.baseIndex < 4):
+			if(self.num <= 6 and self.num > 2 and self.baseIndex < 4):
+				print(f'{self.num=}: {self.baseIndex=}')
+
 				self.initx += (self.base[self.baseIndex].x - self.initx) * self.speed
 				self.inity += (self.base[self.baseIndex].y - self.inity) * self.speed
+
+				if(abs(self.initx) >= self.base[self.baseIndex].x - 10 and abs(self.initx) <= self.base[self.baseIndex].x + 10
+	   				and abs(self.inity) >= self.base[self.baseIndex].y - 10 and abs(self.inity) <= self.base[self.baseIndex].y + 10):
+					self.base[self.baseIndex].InPlayer[1] = True
+				else:
+					self.base[self.baseIndex].InPlayer[1] = False
 
 
 	def dist(self):
@@ -72,10 +83,10 @@ class Player(Sprite):
 
 		self.move()
 
-		if self.ball.t > self.t:
-			self.dx -= (self.ball.dx * self.speed * 2)
-			self.dy -= (self.ball.dy * self.speed * 2)
-			self.t = copy.deepcopy(self.ball.t)
+		if self.ball.t <= 1:
+			self.dx -= (self.ball.dx * 0.01)
+			self.dy -= (self.ball.dy * 0.01)
+			# self.t = copy.deepcopy(self.ball.t)
 
 		# self.x = self.initx - (self.ball.dx * self.ball.t)
 		# self.y = self.inity - (self.ball.dy * self.ball.t)
