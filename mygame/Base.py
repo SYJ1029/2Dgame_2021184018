@@ -24,12 +24,22 @@ class Base:
         if self.type == 3:
             self.InPlayer = [True, True]
 
+    def Conversion(self, key):
+        keydict = {0: SDLK_d, 1: SDLK_w, 2: SDLK_a, 3: SDLK_s}
+
+        return keydict[key]
+
     def handle_event(self, e, type):
         if e.type == SDL_KEYDOWN and self.type == type:
-            if e.key == SDLK_a:
+            if e.key == self.Conversion(self.type) and self.ball.catch:
                 self.ball.dx = (self.x - self.ball.x)
                 self.ball.dy = (self.y - self.ball.y)
                 self.ball.t = 0
+                self.InBall[0] = True
+                self.ball.catch = False
+                self.ball.godraw = True
+            elif self.InBall[1]:
+                self.InBall[0] = False
 
     def InitdistList(self):
         for i in range(len(self.defenderList)):
@@ -45,7 +55,10 @@ class Base:
                 mindist = copy.deepcopy(self.distList[i][0])
                 self.defnum = self.distList[i][1]
 
-        self.defenderList[self.defnum].baseIndex = self.type
+        if self.defenderList[self.defnum].baseIndex >= 5:
+            self.defenderList[self.defnum].baseIndex = self.type
+            self.InPlayer[0] = True
+
         self.distList.clear()
 
         
