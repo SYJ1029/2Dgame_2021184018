@@ -114,12 +114,15 @@ class BallDefence(Ball):
         self.defnum = position
         self.distlist = list()
         self.first = True
-
+        self.base = None
         self.prevx = copy.deepcopy(self.x)
         self.prevy = copy.deepcopy(self.y)
 
         self.drawpos = copy.deepcopy(self.initpos)
         
+
+    def InitBase(self, base):
+        self.base = base
     def move(self):
         if(self.t < 1):
             self.x = self.initpos[0] + self.dx * self.t
