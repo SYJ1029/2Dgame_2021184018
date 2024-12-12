@@ -3,15 +3,16 @@ from gfw import *
 from Pitcher import Pitcher
 from Batter import Batter
 from Ball import *
-from Player import Player
+from Player import *
 from Base import Base
+from ScoreMenual import *
 
 
 world = World(['bg','Objects', 'Ball', 'controller'])
 
 canvas_width = 1280
 canvas_height = 720
-shows_bounding_box = True
+shows_bounding_box = False
 shows_object_count = True
 
 #550 -> 390(-160)
@@ -24,6 +25,7 @@ basePos = [[390, 600], [390, 260],
 bbasePos = [[750, 650], [450, 950], [50, 650], [390, 260]]
 
 def enter():
+    global Score, Strike, Ballcount, Out, attackSequence
 
     bg = ClipedScrollBackGround(f'res/Stadium_2.png')
     world.append(bg, world.layer.bg)
@@ -71,8 +73,7 @@ def enter():
 
 
 def exit():
-    balldelta[0] = 0
-    balldelta[1] = 0
+
     world.clear()
 
 def pause():

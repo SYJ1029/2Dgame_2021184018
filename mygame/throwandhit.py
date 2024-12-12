@@ -4,34 +4,53 @@ from Pitcher import Pitcher
 from Batter import Batter
 from Ball import *
 import Defending
-
+from ScoreMenual import *
+from SBOBox import *
 
 world = World(['bg', 'bgpitcher', 'bbbatter', 'interaction'])
 
 canvas_width = 1280
 canvas_height = 720
-shows_bounding_box = True
+shows_bounding_box = False
 shows_object_count = True
+
+sbo_basepos = [[[95, 650], [155, 650], [215, 650]], [[95, 600], [155, 600]], [[95, 550], [155, 550]]]
+
 
 def enter():
 
     world.append(Background('res/Stadium1.png'), world.layer.bg)
-
+    world.append(SBOBox('res/SBOcanvas.png', 150, 600), world.layer.bg)
 
     global pitcher
     global ball
     global batter
+    global sbo
 
     pitcher = Pitcher()
     batter = Batter()
-    ball = BallAttack([0, 0], 610, 240)
+    sbo = [[SBOCircle('res/blackCircle.png', sbo_basepos[i][j][0], sbo_basepos[i][j][1], i) for j in range(3 - i)] for i in range(3)]
+    sbo[2].append(SBOCircle('res/blackCircle.png', sbo_basepos[2][1][0], sbo_basepos[2][1][1], 2))
+    ball = BallAttack([0, 0], 610, 240, sbo)
 
+    sbo[1][0].subindex = 2
+    sbo[1][1].subindex = 2
+    sbo[2][0].subindex = 3
+    sbo[2][1].subindex = 3
+    sbo[1][0].ChangeFileName()
+    sbo[1][1].ChangeFileName()    
+    sbo[2][0].ChangeFileName()    
+    sbo[2][1].ChangeFileName()    
 
     world.append(pitcher, world.layer.bgpitcher)
     world.append(batter, world.layer.bbbatter)
     world.append(ball, world.layer.interaction)
 
+    for i in range(3):
+        for j in range(3 - i):
+            world.append(sbo[i][j], world.layer.interaction)
 
+    world.append(sbo[2][1], world.layer.interaction)
 
 
 def exit():
@@ -74,6 +93,9 @@ def handle_event(e):
                         if(overlap[2] < 400 or ball.godraw == False):
                             pass
                         else:
+                            sbo[1][0].ChangeFileName()
+                            sbo[1][1].ChangeFileName()  
+
                             gfw.push(Defending)
 
                     else:

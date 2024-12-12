@@ -1,6 +1,8 @@
 from pico2d import * 
 from gfw import *
 import copy
+from ScoreMenual import *
+from SBOBox import *
 
 global balldelta
 balldelta = list([0, 0])
@@ -51,12 +53,8 @@ class Ball(Sprite):
         self.inited = False
 
     def update(self):
-        if(self.godraw):
-            self.area -= 0.1
-            self.move()
-        
-        if(self.area <= 0):
-            self.clear()
+       
+
         self.bg.scroll(self.dx, self.dy)
         #print(self.area)
 
@@ -73,10 +71,12 @@ class Ball(Sprite):
 
 
 class BallAttack(Ball):
-    def __init__(self, ballarea, x, y):
+    def __init__(self, ballarea, x, y, sbo):
         super().__init__(ballarea, x, y)
         self.hit = False
-
+        self.catch = False
+        self.sbo = sbo
+        self.index = [1, 0]
 
     def handle_event(self, e):
         if e.type == SDL_KEYDOWN:
@@ -93,14 +93,59 @@ class BallAttack(Ball):
                 self.center[0] = self.initpos[0] + column * self.ballwidth
                 self.center[1] = self.initpos[1] + row * self.ballheight
 
+    def move(self):
+        self.x += self.dx * self.t
+        self.y += self.dy * self.t
+        self.t += 0.00005
+
+        if(self.area <= 0):
+            self.catch = True
+
+
 
     def update(self):
         if(self.godraw and self.hit == False):
             self.area -= 0.1
             self.move()
         
+        global Score, ScoreIndex, Strike, Ballcount, Out, attackSequence
+        # print(f'{attackSequence}\n\n{Strike=}\n{Ballcount=}\n{Out=}')
+
         if(self.area <= 0):
             self.clear()
+            
+            if(self.catch):
+                Strike += 1
+
+                if Strike == 3:
+                    Out += 1
+                    print(f'{attackSequence}\n\n{Strike=}\n{Ballcount=}\n{Out=}')
+                    Strike = 0
+                    Ballcount = 0
+                    self.sbo[1][0].ChangeFileName()
+                    self.sbo[1][0].RenderFileName()
+                    self.sbo[1][1].ChangeFileName()
+                    self.sbo[1][1].RenderFileName()
+                    if Out < 3:
+                        self.sbo[2][Out - 1].ChangeFileName()
+                        self.sbo[2][Out - 1].RenderFileName()
+                else:
+   
+                    self.sbo[1][Strike - 1].ChangeFileName()
+                    self.sbo[1][Strike - 1].RenderFileName()
+                if Out >= 3:
+                    ChangeAtt()
+                    if attackSequence == True:
+                        ScoreIndex += 1
+                    Out = 0
+                    self.sbo[2][0].ChangeFileName()
+                    self.sbo[2][0].RenderFileName()
+                    self.sbo[2][1].ChangeFileName()
+                    self.sbo[2][1].RenderFileName()
+                self.catch = False
+            
+
+
 
 
 class BallDefence(Ball):
@@ -127,6 +172,7 @@ class BallDefence(Ball):
     def InitBase(self, base):
         self.base = base
     def move(self):
+        global Score, ScoreIndex, Out, attackSequence, runs, runInterval, delaytime
         if(self.t < 1):
             self.x = self.initpos[0] + self.dx * self.t
             self.y = self.initpos[1] + self.dy * self.t
@@ -139,8 +185,10 @@ class BallDefence(Ball):
             # self.prevy = copy.deepcopy(self.y)
         else:
             self.bound = True
+            delaytime += 1
    
     def update(self):
+        global Score, ScoreIndex, Out, attackSequence, delaytime, runInterval, runs
         if(self.godraw):
             self.move()
 
@@ -155,7 +203,7 @@ class BallDefence(Ball):
                 mindist = copy.deepcopy(self.distlist[i][0])
                 self.defnum = self.distlist[i][1]
                 
-        print(f'{mindist=}, {self.defnum=}')
+        # print(f'{mindist=}, {self.defnum=}')
 
         if(self.t >= 1):
             # self.dx = 0
@@ -173,8 +221,15 @@ class BallDefence(Ball):
         else:
             self.first = True
 
-
+    
         self.distlist.clear()
+        if(delaytime > runInterval):
+            runs += 1
+            delaytime = 0
+            pop()
+            # import Defending
+            # Defending.exit()
+
 
     def handle_event(self, e):
         pass

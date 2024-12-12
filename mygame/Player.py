@@ -3,8 +3,8 @@ from gfw import *
 from Ball import *
 import copy
 from math import *
-
-
+from ScoreMenual import *
+from SBOBox import *
 def dist(x, y):
 
 	return sqrt(x ** 2 + y ** 2)
@@ -40,10 +40,13 @@ class Player(Sprite):
 			
 
 	def move(self):
+		global Score, ScoreIndex, Strike, Ballcount, Out, attackSequence
 		if(self.Bat == True and self.ball.defnum == self.num):
 			
-			self.initx += (self.ball.x - self.token[0]) * self.speed
-			self.inity += (self.ball.y - self.token[1]) * self.speed
+			# self.initx += (self.ball.x - self.token[0]) * self.speed
+			# self.inity += (self.ball.y - self.token[1]) * self.speed
+			self.initx = self.initx + (self.ball.x - self.token[0]) * self.speed
+			self.inity = self.inity + (self.ball.y - self.token[1]) * self.speed
 			# print(f'{self.initx=}, {self.inity=}\n')
 			overlap = self.GetOverlapBox()
 
@@ -55,7 +58,12 @@ class Player(Sprite):
 				self.ball.catch = True
 				self.Bat = False
 				if self.ball.bound == False:
-					pass
+					global sbo
+					if(Out >= 3):
+						ChangeAtt()
+					pop()
+
+
 
 				self.ball.initpos = copy.deepcopy([self.ball.x, self.ball.y])
 				self.ball.drawpos = copy.deepcopy([self.ball.prevx, self.ball.prevy])
@@ -65,8 +73,8 @@ class Player(Sprite):
 
 
 
-				if(abs(self.initx) >= self.base[self.baseIndex].x - 40 and abs(self.initx) <= self.base[self.baseIndex].x + 40
-	   				and abs(self.inity) >= self.base[self.baseIndex].y - 40 and abs(self.inity) <= self.base[self.baseIndex].y + 40):
+				if(abs(self.initx) >= self.base[self.baseIndex].x - 80 and abs(self.initx) <= self.base[self.baseIndex].x + 80
+	   				and abs(self.inity) >= self.base[self.baseIndex].y - 80 and abs(self.inity) <= self.base[self.baseIndex].y + 80):
 					self.base[self.baseIndex].InPlayer[1] = True
 				else:
 					self.base[self.baseIndex].InPlayer[1] = False
@@ -80,7 +88,7 @@ class Player(Sprite):
 		return x ** 2 + y ** 2
 
 	def update(self):
-
+		global Score, ScoreIndex, Strike, Ballcount, Out, attackSequence
 		self.move()
 
 		if self.ball.t <= 1:
