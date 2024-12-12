@@ -60,24 +60,24 @@ class Player(Sprite):
 				self.ball.initpos = copy.deepcopy([self.ball.x, self.ball.y])
 				self.ball.drawpos = copy.deepcopy([self.ball.prevx, self.ball.prevy])
 		else:
-			if(self.num <= 6 and self.num > 2 and self.baseIndex < 4):
+			if(self.num >= 2 and self.num < 7 and self.baseIndex < 4):
 				print(f'{self.num=}: {self.baseIndex=}')
 
-				self.initx += (self.base[self.baseIndex].x - self.initx) * self.speed
-				self.inity += (self.base[self.baseIndex].y - self.inity) * self.speed
 
-				if(abs(self.initx) >= self.base[self.baseIndex].x - 10 and abs(self.initx) <= self.base[self.baseIndex].x + 10
-	   				and abs(self.inity) >= self.base[self.baseIndex].y - 10 and abs(self.inity) <= self.base[self.baseIndex].y + 10):
+
+				if(abs(self.initx) >= self.base[self.baseIndex].x - 40 and abs(self.initx) <= self.base[self.baseIndex].x + 40
+	   				and abs(self.inity) >= self.base[self.baseIndex].y - 40 and abs(self.inity) <= self.base[self.baseIndex].y + 40):
 					self.base[self.baseIndex].InPlayer[1] = True
 				else:
 					self.base[self.baseIndex].InPlayer[1] = False
-
+					self.initx += (self.base[self.baseIndex].x - self.initx) * self.speed
+					self.inity += (self.base[self.baseIndex].y - self.inity) * self.speed
 
 	def dist(self):
 		x = (self.ball.initpos[0] + self.ball.dx) - self.initx
 		y = (self.ball.initpos[1] + self.ball.dy) - self.inity
 
-		return sqrt(x ** 2 + y ** 2)
+		return x ** 2 + y ** 2
 
 	def update(self):
 
