@@ -55,7 +55,7 @@ class Base:
                 mindist = copy.deepcopy(self.distList[i][0])
                 self.defnum = self.distList[i][1]
 
-        if self.defenderList[self.defnum].baseIndex >= 5:
+        if self.defenderList[self.defnum].baseIndex >= 5 and self.InPlayer[0] == False:
             self.defenderList[self.defnum].baseIndex = self.type
             self.InPlayer[0] = True
 

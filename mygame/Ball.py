@@ -121,6 +121,7 @@ class BallDefence(Ball):
         self.drawpos = copy.deepcopy(self.initpos)
         self.catch = False
         self.bound = False
+        self.InPlayer = False
         
 
     def InitBase(self, base):
@@ -153,6 +154,8 @@ class BallDefence(Ball):
             if(self.distlist[i][0] < mindist):
                 mindist = copy.deepcopy(self.distlist[i][0])
                 self.defnum = self.distlist[i][1]
+                
+        print(f'{mindist=}, {self.defnum=}')
 
         if(self.t >= 1):
             # self.dx = 0
